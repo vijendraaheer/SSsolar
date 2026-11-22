@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">GOVERNMENT SCHEMES</span><h1>Solar Subsidy & Scheme Information</h1><p>Scheme content can be updated by the Admin Panel as official information changes.</p></div></section>
+<section class="section"><div class="container cards-2">
+{% for s in schemes %}<article class="info-card scheme-card"><h2>{{ s.name }}</h2><p>{{ s.description }}</p><h4>Eligibility</h4><p>{{ s.eligibility }}</p><h4>Documents</h4><p>{{ s.documents }}</p><h4>Subsidy / Benefit</h4><p>{{ s.subsidy_details }}</p><h4>Application Process</h4><p>{{ s.application_process }}</p><a class="btn btn-primary" href="{{ url_for('public.contact') }}">Ask About This Scheme</a></article>{% else %}<div class="empty-state">No schemes published yet.</div>{% endfor %}
+</div></section>
+{% endblock %}

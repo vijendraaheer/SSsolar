@@ -1,0 +1,7 @@
+{% extends "admin/base_admin.html" %}
+{% block admin_content %}
+<div class="page-actions"><p>Add monthly numbers to make the dashboard reflect your actual solar business.</p><a class="admin-btn" href="{{ url_for('admin.add_business_record') }}">+ Add Month</a></div>
+<section class="panel"><canvas id="analyticsChart"></canvas></section>
+<section class="panel table-wrap"><table><thead><tr><th>Month</th><th>Year</th><th>Revenue</th><th>Enquiries</th><th>Projects</th><th>Installed KW</th></tr></thead><tbody>{% for r in records %}<tr><td>{{ r.month }}</td><td>{{ r.year }}</td><td>₹{{ "{:,.0f}".format(r.revenue) }}</td><td>{{ r.enquiries }}</td><td>{{ r.projects }}</td><td>{{ r.installed_kw }}</td></tr>{% else %}<tr><td colspan="6">No business records yet.</td></tr>{% endfor %}</tbody></table></section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script><script>window.ANALYTICS_DATA={{ records|map(attribute='revenue')|list|tojson }};window.ANALYTICS_LABELS={{ records|map(attribute='month')|list|tojson }};</script><script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}

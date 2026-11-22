@@ -1,0 +1,108 @@
+{% extends "admin/base_admin.html" %}
+{% block admin_content %}
+
+<div class="kpi-grid">
+    <div class="kpi"><span>Customers</span><strong>{{ customers }}</strong><small>Customer database</small></div>
+    <div class="kpi"><span>Enquiries</span><strong>{{ enquiries }}</strong><small>All incoming leads</small></div>
+    <div class="kpi"><span>Projects</span><strong>{{ projects }}</strong><small>Published projects</small></div>
+    <div class="kpi"><span>Services</span><strong>{{ services }}</strong><small>Active/managed services</small></div>
+    <div class="kpi"><span>Business Revenue</span><strong>₹{{ "{:,.0f}".format(revenue) }}</strong><small>Entered in analytics</small></div>
+</div>
+
+<div class="admin-grid-2">
+    <section class="panel">
+        <div class="panel-head">
+            <h2>Monthly Business Growth</h2>
+            <a href="{{ url_for('admin.analytics') }}">Manage Data →</a>
+        </div>
+        <canvas id="growthChart"></canvas>
+    </section>
+
+    <section class="panel quick">
+        <h2>Quick Actions</h2>
+        <a href="{{ url_for('admin.add_project') }}">➕ Add Project</a>
+        <a href="{{ url_for('admin.add_gallery') }}">🖼 Add Gallery Image</a>
+        <a href="{{ url_for('admin.add_service') }}">☀ Add Service</a>
+        <a href="{{ url_for('admin.add_scheme') }}">🏛 Add Scheme</a>
+        <a href="{{ url_for('admin.add_office') }}">🏢 Add Office</a>
+        <a href="{{ url_for('admin.add_business_record') }}">📈 Add Business Month</a>
+    </section>
+</div>
+
+<!-- CUSTOMER SECTION IS NOW INSIDE DASHBOARD -->
+<section class="panel customer-dashboard-panel" id="customers">
+    <div class="customer-panel-head">
+        <div>
+            <span class="section-eyebrow">Customer Management</span>
+            <h2>Confirmed Customers</h2>
+            <p class="customer-subtitle">Customers whose solar enquiry is confirmed or completed.</p>
+        </div>
+
+        <div class="customer-panel-actions">
+            <div class="customer-total">
+                <span>Total Customers</span>
+                <strong>{{ customers }}</strong>
+            </div>
+            <a class="customer-view-btn" href="{{ url_for('admin.customers') }}">Manage Customers →</a>
+        </div>
+    </div>
+
+    {% if customer_list is defined and customer_list %}
+    <div class="customer-table-wrap">
+        <table class="customer-table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customer_list %}
+                <tr>
+                    <td>
+                        <div class="customer-name">{{ customer.name or 'N/A' }}</div>
+                        <div class="customer-id">Customer ID: {{ customer.id }}</div>
+                    </td>
+                    <td>{{ customer.phone or 'N/A' }}</td>
+                    <td>{{ customer.email or 'N/A' }}</td>
+                    <td>{{ customer.city or 'N/A' }}</td>
+                    <td>
+                        <span class="customer-status">
+                            <span class="customer-status-dot"></span>
+                            Confirmed / Completed
+                        </span>
+                    </td>
+                    <td>
+                        <form method="POST"
+                              action="{{ url_for('admin.delete_customer', customer_id=customer.id) }}"
+                              onsubmit="return confirm('Are you sure you want to delete this customer?');">
+                            <button type="submit" class="customer-delete-btn">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="customer-empty">
+        <div class="customer-empty-icon">☀</div>
+        <h3>No customer records available on dashboard</h3>
+        <p>Pass <strong>customer_list</strong> from your dashboard route to display customer records here.</p>
+        <a href="{{ url_for('admin.customers') }}" class="customer-view-btn">Open Customer Management</a>
+    </div>
+    {% endif %}
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+window.GROWTH_DATA={{ records|map(attribute='revenue')|list|tojson }};
+window.GROWTH_LABELS={{ records|map(attribute='month')|list|tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+
+{% endblock %}

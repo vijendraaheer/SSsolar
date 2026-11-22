@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">SOLAR SERVICES</span><h1>Solutions for Every Power Requirement</h1><p>Choose a service and talk to our team about your requirement.</p></div></section>
+<section class="section"><div class="container service-grid">
+{% for service in services %}<article class="service-card large"><div class="service-icon">☀</div><h3>{{ service.name }}</h3><p>{{ service.description }}</p>{% if service.price %}<small>{{ service.price }}</small>{% endif %}<a class="btn btn-outline" href="{{ url_for('public.contact') }}">Enquire Now</a></article>{% endfor %}
+</div></section>
+{% endblock %}

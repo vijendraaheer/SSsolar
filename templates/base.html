@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title or "SS Solar Solutions" }}</title>
+  <meta name="description" content="SS Solar Solutions - Complete Solar Solutions for a Brighter Tomorrow">
+  <link rel="icon" href="{{ url_for('static', filename='images/ss-solar-logo.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="{{ url_for('public.home') }}">
+      <img src="{{ url_for('static', filename='images/ss-solar-logo.png') }}" alt="SS Solar Solutions">
+      <span><strong>SS SOLAR</strong><small>— SOLUTIONS —</small></span>
+    </a>
+    <button class="menu-btn" onclick="document.body.classList.toggle('nav-open')">☰</button>
+    <nav class="main-nav">
+      <a href="{{ url_for('public.home') }}">Home</a>
+      <a href="{{ url_for('public.services') }}">Services</a>
+      <a href="{{ url_for('public.schemes') }}">Gov Schemes</a>
+      <a href="{{ url_for('public.loans') }}">Solar Loan</a>
+      <a href="{{ url_for('public.projects') }}">Projects</a>
+      <a href="{{ url_for('public.gallery') }}">Gallery</a>
+      <a href="{{ url_for('public.about') }}">About</a>
+      <a href="{{ url_for('public.offices') }}">Offices</a>
+      <a class="nav-cta" href="{{ url_for('public.contact') }}">Get Quote</a>
+    </nav>
+  </div>
+</header>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="flash-stack">
+    {% for category, message in messages %}
+      <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+{% endwith %}
+
+<main>{% block content %}{% endblock %}</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <img class="footer-logo" src="{{ url_for('static', filename='images/ss-solar-logo.png') }}" alt="">
+      <p>Complete Solar Solutions for a Brighter Tomorrow.</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <a href="{{ url_for('public.services') }}">Services</a>
+      <a href="{{ url_for('public.projects') }}">Projects</a>
+      <a href="{{ url_for('public.gallery') }}">Gallery</a>
+      <a href="{{ url_for('public.contact') }}">Enquiry</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="tel:{{ contact.phone1 }}">📞 {{ contact.phone1 }}</a>
+      <a href="tel:{{ contact.phone2 }}">📞 {{ contact.phone2 }}</a>
+      <a href="mailto:{{ contact.email }}">✉ {{ contact.email }}</a>
+      <span>📍 {{ contact.address }}</span>
+    </div>
+  </div>
+  <div class="footer-bottom">© {{ 2026 }} SS Solar Solutions · Clean · Renewable · Sustainable</div>
+</footer>
+
+<a class="floating-call" href="tel:{{ contact.phone1 }}">📞</a>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

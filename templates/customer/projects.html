@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">REAL PROJECTS</span><h1>See Our Solar Installations</h1><p>Explore completed work and get an idea of what a similar system could look like.</p></div></section>
+<section class="section"><div class="container project-grid">
+{% for project in projects %}<article class="project-card">{% if project.image %}<img src="{{ url_for('static', filename='uploads/' ~ project.image) }}" alt="{{ project.project_name }}">{% else %}<div class="image-placeholder">☀ SS SOLAR</div>{% endif %}<div class="project-body"><span class="pill">{{ project.project_type }}</span><h3>{{ project.project_name }}</h3><p>📍 {{ project.location or "Rajasthan" }} · ⚡ {{ project.system_size or "Custom" }}</p><p>{{ project.description or "Solar installation by SS Solar Solutions." }}</p><div class="card-actions"><a href="{{ url_for('public.project_detail', project_id=project.id) }}">View Project</a><a href="{{ url_for('public.contact') }}">I Want Similar</a></div></div></article>{% else %}<div class="empty-state">No projects have been published yet.</div>{% endfor %}
+</div></section>
+{% endblock %}

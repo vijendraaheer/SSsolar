@@ -1,0 +1,45 @@
+{% extends "admin/base_admin.html" %}{% block admin_content %}
+<section class="panel table-wrap">
+    <div class="panel-head">
+        <h2>All Enquiries</h2>
+        <span>{{ enquiries|length }} leads</span>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Requirement</th>
+                <th>Message</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Contact</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in enquiries %}
+            <tr>
+                <td>{{ e.name }}</td>
+                <td>{{ e.phone }}</td>
+                <td>{{ e.requirement }}</td>
+                <td class="message-cell">{{ e.message or "—" }}</td>
+                <td>{{ e.created_at.strftime("%d %b %Y") if e.created_at else "—" }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('admin.enquiry_status', enquiry_id=e.id) }}">
+                        <select name="status" onchange="this.form.submit()">
+                            {% for s in ["New","Contacted","Site Visit","Quotation Sent","Negotiation","Confirmed","Completed","Rejected"] %}
+                            <option {{ "selected" if e.status==s else "" }}>{{ s }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </td>
+                <td>
+                    <a class="table-link" href="tel:{{ e.phone }}">Call</a> · 
+                    <a class="table-link" href="https://wa.me/91{{ e.phone }}" target="_blank">Msg</a>
+                </td>
+            </tr>{% else %}<tr>
+                <td colspan="7">No enquiries yet.</td>
+            </tr>{% endfor %}
+        </tbody>
+    </table>
+</section>{% endblock %}

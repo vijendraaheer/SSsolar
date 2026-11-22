@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">ABOUT SS SOLAR</span><h1>Complete Solar Solutions for a Brighter Tomorrow</h1><p>Solar solutions for residential, commercial and industrial requirements.</p></div></section>
+<section class="section"><div class="container two-col"><div><span class="eyebrow dark">OUR APPROACH</span><h2>From Roof Survey to Solar Savings</h2><p>SS Solar Solutions helps customers explore suitable solar systems, understand available options and connect with the team for project planning and installation.</p><p>Our website is designed so customers can first see real projects, explore services, understand schemes and loan calculations, and then send an enquiry.</p></div><div class="info-card"><h3>SS Solar Solutions</h3><p><b>Owner:</b> {{ contact.owner }}</p><p><b>Phone:</b> {{ contact.phone1 }} / {{ contact.phone2 }}</p><p><b>Email:</b> {{ contact.email }}</p><p><b>Address:</b> {{ contact.address }}</p></div></div></section>
+{% endblock %}

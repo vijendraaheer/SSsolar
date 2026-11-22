@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">{{ project.project_type }}</span><h1>{{ project.project_name }}</h1><p>📍 {{ project.location }} · ⚡ {{ project.system_size }}</p></div></section>
+<section class="section"><div class="container two-col project-detail">
+<div>{% if project.image %}<img class="detail-image" src="{{ url_for('static', filename='uploads/' ~ project.image) }}" alt="{{ project.project_name }}">{% else %}<div class="image-placeholder detail-image">☀ SS SOLAR</div>{% endif %}</div>
+<div><span class="eyebrow dark">PROJECT DETAILS</span><h2>{{ project.project_name }}</h2><div class="detail-list"><span>System Size <b>{{ project.system_size or "—" }}</b></span><span>Type <b>{{ project.project_type }}</b></span><span>Location <b>{{ project.location or "—" }}</b></span><span>Installation <b>{{ project.installation_date or "—" }}</b></span></div><p>{{ project.description }}</p><div class="cta-buttons"><a class="btn btn-primary" href="{{ url_for('public.contact') }}">I Want a Similar System</a><a class="btn btn-outline" href="tel:{{ contact.phone1 }}">Call Now</a></div></div>
+</div></section>
+{% endblock %}

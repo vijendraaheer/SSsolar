@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">OUR GALLERY</span><h1>Real Work. Real Solar.</h1><p>Browse installation photos and explore the SS Solar Solutions visual portfolio.</p></div></section>
+<section class="section"><div class="container">
+<div class="filters"><a class="{{ 'active' if category == 'All' else '' }}" href="{{ url_for('public.gallery') }}">All</a><a class="{{ 'active' if category == 'Residential' else '' }}" href="?category=Residential">Residential</a><a class="{{ 'active' if category == 'Commercial' else '' }}" href="?category=Commercial">Commercial</a><a class="{{ 'active' if category == 'Industrial' else '' }}" href="?category=Industrial">Industrial</a><a class="{{ 'active' if category == 'Rooftop' else '' }}" href="?category=Rooftop">Rooftop</a></div>
+<div class="gallery-grid">{% for item in gallery %}<figure class="gallery-item"><img src="{{ url_for('static', filename='uploads/' ~ item.image) }}" alt="{{ item.title }}" onclick="openLightbox(this.src, this.alt)"><figcaption><b>{{ item.title }}</b><span>{{ item.location }} · {{ item.category }}</span></figcaption></figure>{% else %}<div class="empty-state">Gallery images added by Admin will appear here.</div>{% endfor %}</div>
+</div></section>
+<div id="lightbox" class="lightbox" onclick="closeLightbox()"><button>×</button><img id="lightbox-img" alt=""></div>
+{% endblock %}

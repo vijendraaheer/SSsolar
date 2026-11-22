@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">OUR OFFICES</span><h1>Visit SS Solar Solutions</h1><p>Find our office, contact our team and plan your solar journey.</p></div></section>
+<section class="section"><div class="container cards-2">{% for office in offices %}<article class="info-card"><h2>📍 {{ office.office_name }}</h2><p><b>City:</b> {{ office.city }}</p><p>{{ office.address }}</p><p>📞 <a href="tel:{{ office.phone }}">{{ office.phone }}</a></p><p>✉ <a href="mailto:{{ office.email }}">{{ office.email }}</a></p><p>🕘 {{ office.opening_hours }}</p><div class="cta-buttons"><a class="btn btn-primary" href="tel:{{ office.phone }}">Call Office</a>{% if office.map_link %}<a class="btn btn-outline" href="{{ office.map_link }}" target="_blank">Get Directions</a>{% endif %}</div></article>{% else %}<div class="empty-state">Office details will appear here.</div>{% endfor %}</div></section>
+{% endblock %}
