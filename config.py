@@ -10,17 +10,12 @@ BASE_DIR = Path(__file__).resolve().parent
 DATABASE_DIR = BASE_DIR / "database"
 DATABASE_DIR.mkdir(parents=True, exist_ok=True)
 
-# Local database fallback
 LOCAL_DATABASE = DATABASE_DIR / "solar.db"
 
-# Environment database (Render PostgreSQL)
 DATABASE_URL = os.getenv("DATABASE_URL", "").strip()
 
-# Fix PostgreSQL URL formats provided by hosting platforms
 if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace(
-        "postgres://", "postgresql://", 1
-    )
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 if not DATABASE_URL:
     DATABASE_URL = f"sqlite:///{LOCAL_DATABASE.as_posix()}"
